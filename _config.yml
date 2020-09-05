@@ -1,0 +1,8 @@
+# Book settings
+title: 我的機器學習歷程
+author: HUA
+logo: ML_process.png
+
+latex:
+  latex_documents:
+    targetname: book.tex
