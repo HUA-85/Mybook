@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>假設檢定 &#8212; 我的機器學習歷程</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="機器學習工作流程" href="20200901_%E6%88%BF%E5%83%B9%E5%9B%9E%E6%AD%B8%E9%A0%90%E6%B8%AC.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/ML_process.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">我的機器學習歷程</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome to your Jupyter Book
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="content.html">
+   Content in Jupyter Book
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20200901_%E6%88%BF%E5%83%B9%E5%9B%9E%E6%AD%B8%E9%A0%90%E6%B8%AC.html">
+   機器學習工作流程
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   假設檢定
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/20200922_假設檢定.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/20200922_假設檢定.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/20200922_假設檢定.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   美國總統的身高近40年(10屆)是否有比較高?
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>假設檢定<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>美國總統的身高近40年(10屆)是否有比較高?<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">7</span><span class="n">dd3504c366f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./president_heights.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>order</th>
+      <th>name</th>
+      <th>height(cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>George Washington</td>
+      <td>189</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>John Adams</td>
+      <td>170</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Thomas Jefferson</td>
+      <td>189</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>James Madison</td>
+      <td>163</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>James Monroe</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>John Quincy Adams</td>
+      <td>171</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>Andrew Jackson</td>
+      <td>185</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>Martin Van Buren</td>
+      <td>168</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>William Henry Harrison</td>
+      <td>173</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>John Tyler</td>
+      <td>183</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>order</th>
+      <th>name</th>
+      <th>height(cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>32</th>
+      <td>35</td>
+      <td>John F. Kennedy</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>36</td>
+      <td>Lyndon B. Johnson</td>
+      <td>193</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>37</td>
+      <td>Richard Nixon</td>
+      <td>182</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>38</td>
+      <td>Gerald Ford</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>39</td>
+      <td>Jimmy Carter</td>
+      <td>177</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>40</td>
+      <td>Ronald Reagan</td>
+      <td>185</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>41</td>
+      <td>George H. W. Bush</td>
+      <td>188</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>42</td>
+      <td>Bill Clinton</td>
+      <td>188</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>43</td>
+      <td>George W. Bush</td>
+      <td>182</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>44</td>
+      <td>Barack Obama</td>
+      <td>185</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>order</th>
+      <th>name</th>
+      <th>height(cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>George Washington</td>
+      <td>189</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>John Adams</td>
+      <td>170</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Thomas Jefferson</td>
+      <td>189</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>James Madison</td>
+      <td>163</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>James Monroe</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>John Quincy Adams</td>
+      <td>171</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>Andrew Jackson</td>
+      <td>185</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>Martin Van Buren</td>
+      <td>168</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>William Henry Harrison</td>
+      <td>173</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>John Tyler</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>James K. Polk</td>
+      <td>173</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>Zachary Taylor</td>
+      <td>173</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>Millard Fillmore</td>
+      <td>175</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>14</td>
+      <td>Franklin Pierce</td>
+      <td>178</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>15</td>
+      <td>James Buchanan</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>16</td>
+      <td>Abraham Lincoln</td>
+      <td>193</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>17</td>
+      <td>Andrew Johnson</td>
+      <td>178</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18</td>
+      <td>Ulysses S. Grant</td>
+      <td>173</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>19</td>
+      <td>Rutherford B. Hayes</td>
+      <td>174</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>20</td>
+      <td>James A. Garfield</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>21</td>
+      <td>Chester A. Arthur</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>23</td>
+      <td>Benjamin Harrison</td>
+      <td>168</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>25</td>
+      <td>William McKinley</td>
+      <td>170</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>26</td>
+      <td>Theodore Roosevelt</td>
+      <td>178</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>27</td>
+      <td>William Howard Taft</td>
+      <td>182</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>28</td>
+      <td>Woodrow Wilson</td>
+      <td>180</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>29</td>
+      <td>Warren G. Harding</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>30</td>
+      <td>Calvin Coolidge</td>
+      <td>178</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>31</td>
+      <td>Herbert Hoover</td>
+      <td>182</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>32</td>
+      <td>Franklin D. Roosevelt</td>
+      <td>188</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>33</td>
+      <td>Harry S. Truman</td>
+      <td>175</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>34</td>
+      <td>Dwight D. Eisenhower</td>
+      <td>179</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#two sample , 單尾 假設檢定</span>
+<span class="c1">#虛無假設 H0 : U1 &lt;=U2  H1 : U1 &gt; U2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;美國總統近10屆身高平均:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;美國總統扣除近10屆身高平均:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+
+<span class="c1"># Independent T-Test</span>
+<span class="n">t</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">],</span><span class="n">df1</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">])</span>
+<span class="c1">#ttest_ind is 2-tailed, so half the resulting p-value to get a 1-tailed p-value</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;t-statistic:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p1</span><span class="p">))</span>
+
+<span class="n">pop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">100000</span><span class="p">)</span>
+<span class="c1"># calculate a 90% confidence interval. 10% of the probability is outside this, 5% in each tail</span>
+<span class="n">ci</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.90</span><span class="p">,</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="c1"># show the hypothesized population mean</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># show the right-tail confidence interval threshold - 5% of propbability is under the curve to the right of this.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># show the t-statistic - the p-value is the area under the curve to the right of this</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="n">t</span><span class="o">*</span><span class="n">pop</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;magenta&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>美國總統近10屆身高平均:184.6
+美國總統扣除近10屆身高平均:178.21875
+t-statistic:2.69562113651512
+p-value:0.005113
+</pre></div>
+</div>
+<img alt="_images/20200922_假設檢定_6_1.png" src="_images/20200922_假設檢定_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#檢定</span>
+<span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;拒絕虛無假設，有顯著差異。&quot;</span><span class="p">)</span>
+<span class="k">else</span> <span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;不能拒絕虛無假設。&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>拒絕虛無假設，有顯著差異。
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="20200901_%E6%88%BF%E5%83%B9%E5%9B%9E%E6%AD%B8%E9%A0%90%E6%B8%AC.html" title="previous page">機器學習工作流程</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By HUA<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -18,17 +18,13 @@ Traceback (most recent call last):
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
 import pandas as pd
-X = pd.DataFrame(ds.data,columns=ds.feature_names)
-X.head()
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[1;32m<ipython-input-5-e59cd64edc1c>[0m in [0;36m<module>[1;34m[0m
+[1;32m<ipython-input-1-7dd3504c366f>[0m in [0;36m<module>[1;34m[0m
 [1;32m----> 1[1;33m [1;32mimport[0m [0mpandas[0m [1;32mas[0m [0mpd[0m[1;33m[0m[0m
-[0m[0;32m      2[0m [0mX[0m [1;33m=[0m [0mpd[0m[1;33m.[0m[0mDataFrame[0m[1;33m([0m[0mds[0m[1;33m.[0m[0mdata[0m[1;33m,[0m[0mcolumns[0m[1;33m=[0m[0mds[0m[1;33m.[0m[0mfeature_names[0m[1;33m)[0m[1;33m[0m[0m
-[0;32m      3[0m [0mX[0m[1;33m.[0m[0mhead[0m[1;33m([0m[1;33m)[0m[1;33m[0m[0m
-
+[0m
 [1;31mModuleNotFoundError[0m: No module named 'pandas'
 ModuleNotFoundError: No module named 'pandas'
 

@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>機器學習工作流程 &#8212; 我的機器學習歷程</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,9 +15,9 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -26,7 +27,7 @@
     <script src="_static/copybutton.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
@@ -37,6 +38,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="假設檢定" href="20200922_%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A.html" />
     <link rel="prev" title="Content with notebooks" href="notebooks.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,6 +88,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    機器學習工作流程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20200922_%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A.html">
+   假設檢定
   </a>
  </li>
 </ul>
@@ -345,123 +352,17 @@ problems.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="n">e59cd64edc1c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>CRIM</th>
-      <th>ZN</th>
-      <th>INDUS</th>
-      <th>CHAS</th>
-      <th>NOX</th>
-      <th>RM</th>
-      <th>AGE</th>
-      <th>DIS</th>
-      <th>RAD</th>
-      <th>TAX</th>
-      <th>PTRATIO</th>
-      <th>B</th>
-      <th>LSTAT</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.00632</td>
-      <td>18.0</td>
-      <td>2.31</td>
-      <td>0.0</td>
-      <td>0.538</td>
-      <td>6.575</td>
-      <td>65.2</td>
-      <td>4.0900</td>
-      <td>1.0</td>
-      <td>296.0</td>
-      <td>15.3</td>
-      <td>396.90</td>
-      <td>4.98</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.02731</td>
-      <td>0.0</td>
-      <td>7.07</td>
-      <td>0.0</td>
-      <td>0.469</td>
-      <td>6.421</td>
-      <td>78.9</td>
-      <td>4.9671</td>
-      <td>2.0</td>
-      <td>242.0</td>
-      <td>17.8</td>
-      <td>396.90</td>
-      <td>9.14</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.02729</td>
-      <td>0.0</td>
-      <td>7.07</td>
-      <td>0.0</td>
-      <td>0.469</td>
-      <td>7.185</td>
-      <td>61.1</td>
-      <td>4.9671</td>
-      <td>2.0</td>
-      <td>242.0</td>
-      <td>17.8</td>
-      <td>392.83</td>
-      <td>4.03</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.03237</td>
-      <td>0.0</td>
-      <td>2.18</td>
-      <td>0.0</td>
-      <td>0.458</td>
-      <td>6.998</td>
-      <td>45.8</td>
-      <td>6.0622</td>
-      <td>3.0</td>
-      <td>222.0</td>
-      <td>18.7</td>
-      <td>394.63</td>
-      <td>2.94</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.06905</td>
-      <td>0.0</td>
-      <td>2.18</td>
-      <td>0.0</td>
-      <td>0.458</td>
-      <td>7.147</td>
-      <td>54.2</td>
-      <td>6.0622</td>
-      <td>3.0</td>
-      <td>222.0</td>
-      <td>18.7</td>
-      <td>396.90</td>
-      <td>5.33</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -501,7 +402,8 @@ problems.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None,
+         normalize=False)
 </pre></div>
 </div>
 </div>
@@ -524,7 +426,7 @@ problems.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Regression of RMSE is 4.797189558988069 for traning。
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Regression of RMSE is 4.615824757030964 for traning。
 </pre></div>
 </div>
 </div>
@@ -540,13 +442,7 @@ problems.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="n">c7f43904d9f3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">R2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_train_predict</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Regression of R2 score is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R2</span><span class="p">)</span> <span class="p">,</span><span class="s2">&quot;for traning。&quot;</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;r2_score&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Regression of R2 score is 0.7328901880651709 for traning。
 </pre></div>
 </div>
 </div>
@@ -583,6 +479,7 @@ problems.
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="notebooks.html" title="previous page">Content with notebooks</a>
+    <a class='right-next' id="next-link" href="20200922_%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A.html" title="next page">假設檢定</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
