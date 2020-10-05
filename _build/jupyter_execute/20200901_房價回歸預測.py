@@ -40,13 +40,13 @@ X = pd.DataFrame(ds.data,columns=ds.feature_names)
 X.head()
 
 
-# In[ ]:
+# In[6]:
 
 
 y = ds.target
 
 
-# In[ ]:
+# In[7]:
 
 
 #a.isnull().sum()
@@ -57,7 +57,7 @@ print(y_train.shape)
 print(y_test.shape)
 
 
-# In[ ]:
+# In[8]:
 
 
 from sklearn.linear_model import LinearRegression
@@ -69,7 +69,7 @@ my_model.fit(X_train , y_train)
 
 # ### RMSE
 
-# In[ ]:
+# In[9]:
 
 
 import numpy as np
@@ -77,7 +77,7 @@ y_train_predict = my_model.predict(X_train)
 rmse = (np.sqrt(mean_squared_error(y_train,y_train_predict)))
 
 
-# In[ ]:
+# In[10]:
 
 
 print("Regression of RMSE is {}".format(rmse) ,"for traning。")
@@ -85,7 +85,7 @@ print("Regression of RMSE is {}".format(rmse) ,"for traning。")
 
 # ###  R2 score
 
-# In[ ]:
+# In[11]:
 
 
 R2 = r2_score(y_train,y_train_predict)

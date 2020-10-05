@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat or Not &#8212; 我的機器學習歷程</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="使用Keres MNIST Fashion辨識穿著" href="20200929MNIST_Fashion.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/ML_process.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">我的機器學習歷程</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome to your Jupyter Book
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="content.html">
+   Content in Jupyter Book
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20200901_%E6%88%BF%E5%83%B9%E5%9B%9E%E6%AD%B8%E9%A0%90%E6%B8%AC.html">
+   機器學習工作流程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20200922_%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A.html">
+   假設檢定
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20200929MNIST_Fashion.html">
+   使用Keres MNIST Fashion辨識穿著
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Cat or Not
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/20200929CAT_OR_NOT.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/20200929CAT_OR_NOT.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/20200929CAT_OR_NOT.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="cat-or-not">
+<h1>Cat or Not<a class="headerlink" href="#cat-or-not" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Flatten</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span>
+<span class="kn">from</span> <span class="nn">keras.layers.normalization</span> <span class="kn">import</span> <span class="n">BatchNormalization</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">shuffle</span><span class="p">,</span> <span class="n">choice</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">keras</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using TensorFlow backend.
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="nn">c:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\pywrap_tensorflow.py</span> in <span class="ni">swig_import_helper</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>         <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">18</span>             <span class="n">fp</span><span class="p">,</span> <span class="n">pathname</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="s1">&#39;_pywrap_tensorflow&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)])</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python36-32\lib\imp.py</span> in <span class="ni">find_module</span><span class="nt">(name, path)</span>
+<span class="g g-Whitespace">    </span><span class="mi">296</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">297</span>         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERR_MSG</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">298</span> 
+
+<span class="ne">ImportError</span>: No module named &#39;_pywrap_tensorflow&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">65</span>     <span class="c1"># use `dlopen()` for dynamic loading.</span>
+<span class="ne">---&gt; </span><span class="mi">66</span>     <span class="kn">from</span> <span class="nn">tensorflow.python</span> <span class="kn">import</span> <span class="n">pywrap_tensorflow</span>
+<span class="g g-Whitespace">     </span><span class="mi">67</span> <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\pywrap_tensorflow.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">27</span>             <span class="k">return</span> <span class="n">_mod</span>
+<span class="ne">---&gt; </span><span class="mi">28</span>     <span class="n">_pywrap_tensorflow</span> <span class="o">=</span> <span class="n">swig_import_helper</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="k">del</span> <span class="n">swig_import_helper</span>
+
+<span class="nn">c:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\pywrap_tensorflow.py</span> in <span class="ni">swig_import_helper</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">20</span>             <span class="kn">import</span> <span class="nn">_pywrap_tensorflow</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>             <span class="k">return</span> <span class="n">_pywrap_tensorflow</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;_pywrap_tensorflow&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="n">ebc680bfa19</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Flatten</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">keras.layers.normalization</span> <span class="kn">import</span> <span class="n">BatchNormalization</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\keras\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">activations</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">applications</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\keras\utils\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">data_utils</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">io_utils</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">conv_utils</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">losses_utils</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">metrics_utils</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\keras\utils\conv_utils.py in &lt;module&gt;
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> 
+<span class="g g-Whitespace">     </span><span class="mi">11</span> 
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\keras\backend\__init__.py in &lt;module&gt;
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.load_backend</span> <span class="kn">import</span> <span class="n">epsilon</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">.load_backend</span> <span class="kn">import</span> <span class="n">set_epsilon</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">.load_backend</span> <span class="kn">import</span> <span class="n">floatx</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">.load_backend</span> <span class="kn">import</span> <span class="n">set_floatx</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">.load_backend</span> <span class="kn">import</span> <span class="n">cast_to_floatx</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\keras\backend\load_backend.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">88</span> <span class="k">elif</span> <span class="n">_BACKEND</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">89</span>     <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Using TensorFlow backend.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">90</span>     <span class="kn">from</span> <span class="nn">.tensorflow_backend</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">     </span><span class="mi">91</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">92</span>     <span class="c1"># Try and load external backend.</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\keras\backend\tensorflow_backend.py in &lt;module&gt;
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">tensorflow.python.eager</span> <span class="kn">import</span> <span class="n">context</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">tensorflow.python.framework</span> <span class="kn">import</span> <span class="n">device</span> <span class="k">as</span> <span class="n">tfdev</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\tensorflow\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">22</span> 
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="c1"># pylint: disable=wildcard-import</span>
+<span class="ne">---&gt; </span><span class="mi">24</span> <span class="kn">from</span> <span class="nn">tensorflow.python</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="c1"># pylint: enable=wildcard-import</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> 
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">70</span> <span class="k">for</span> <span class="n">some</span> <span class="n">common</span> <span class="n">reasons</span> <span class="ow">and</span> <span class="n">solutions</span><span class="o">.</span>  <span class="n">Include</span> <span class="n">the</span> <span class="n">entire</span> <span class="n">stack</span> <span class="n">trace</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span> <span class="n">above</span> <span class="n">this</span> <span class="n">error</span> <span class="n">message</span> <span class="n">when</span> <span class="n">asking</span> <span class="k">for</span> <span class="n">help</span><span class="o">.</span><span class="s2">&quot;&quot;&quot; % traceback.format_exc()</span>
+<span class="ne">---&gt; </span><span class="mi">72</span><span class="s2">   raise ImportError(msg)</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span><span class="s2"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span><span class="s2"> # Protocol buffers</span>
+
+<span class="ne">ImportError</span>: Traceback (most recent call last):
+<span class="s2">  File &quot;c:\users\怡樺\hellodjango\lib\site-packages</span><span class="se">\t</span><span class="s2">ensorflow\python\pywrap_tensorflow.py&quot;, line 18, in swig_import_helper</span>
+<span class="s2">    fp, pathname, description = imp.find_module(&#39;_pywrap_tensorflow&#39;, [dirname(__file__)])</span>
+<span class="s2">  File &quot;C:\Users\怡樺\AppData\Local\Programs\Python\Python36-32\lib\imp.py&quot;, line 297, in find_module</span>
+<span class="s2">    raise ImportError(_ERR_MSG.format(name), name=name)</span>
+<span class="ne">ImportError</span>: No module named &#39;_pywrap_tensorflow&#39;
+
+<span class="s2">During handling of the above exception, another exception occurred:</span>
+
+<span class="s2">Traceback (most recent call last):</span>
+<span class="s2">  File &quot;c:\users\怡樺\hellodjango\lib\site-packages</span><span class="se">\t</span><span class="s2">ensorflow\python\__init__.py&quot;, line 66, in &lt;module&gt;</span>
+<span class="s2">    from tensorflow.python import pywrap_tensorflow</span>
+<span class="s2">  File &quot;c:\users\怡樺\hellodjango\lib\site-packages</span><span class="se">\t</span><span class="s2">ensorflow\python\pywrap_tensorflow.py&quot;, line 28, in &lt;module&gt;</span>
+<span class="s2">    _pywrap_tensorflow = swig_import_helper()</span>
+<span class="s2">  File &quot;c:\users\怡樺\hellodjango\lib\site-packages</span><span class="se">\t</span><span class="s2">ensorflow\python\pywrap_tensorflow.py&quot;, line 20, in swig_import_helper</span>
+<span class="s2">    import _pywrap_tensorflow</span>
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;_pywrap_tensorflow&#39;
+
+
+<span class="s2">Failed to load the native TensorFlow runtime.</span>
+
+<span class="s2">See https://github.com/tensorflow/tensorflow/blob/master/tensorflow/g3doc/get_started/os_setup.md#import_error</span>
+
+<span class="s2">for some common reasons and solutions.  Include the entire stack trace</span>
+<span class="s2">above this error message when asking for help.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">label_img</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>   
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;cats&#39;</span><span class="p">:</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;notcats&#39;</span> <span class="p">:</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    
+<span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">IMAGE_DIRECTORY</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading images...&quot;</span><span class="p">)</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">directories</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">IMAGE_DIRECTORY</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+    
+  <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">directories</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dirname</span><span class="p">))</span>
+    <span class="n">file_names</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">IMAGE_DIRECTORY</span><span class="p">,</span> <span class="n">dirname</span><span class="p">)))[</span><span class="mi">2</span><span class="p">]</span> 
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+      <span class="n">image_name</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span>
+      <span class="c1">#載入圖片路徑</span>
+      <span class="n">image_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">IMAGE_DIRECTORY</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">image_name</span><span class="p">)</span>
+      <span class="n">label</span> <span class="o">=</span> <span class="n">label_img</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+      <span class="k">if</span> <span class="s2">&quot;DS_Store&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">image_path</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span> <span class="c1">#轉換灰色圖像</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="n">IMAGE_SIZE</span><span class="p">,</span> <span class="n">IMAGE_SIZE</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">ANTIALIAS</span><span class="p">)</span> 
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">),</span><span class="n">label</span><span class="p">])</span>
+  
+  <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">IMAGE_SIZE</span><span class="p">,</span> <span class="n">IMAGE_SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>  <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span><span class="c1">#減少過度擬合</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+  <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IMAGE_SIZE</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 254, 254, 32)      320       
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 127, 127, 32)      0         
+_________________________________________________________________
+batch_normalization (BatchNo (None, 127, 127, 32)      128       
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 123, 123, 64)      51264     
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 61, 61, 64)        0         
+_________________________________________________________________
+batch_normalization_1 (Batch (None, 61, 61, 64)        256       
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 57, 57, 128)       204928    
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 28, 28, 128)       0         
+_________________________________________________________________
+batch_normalization_2 (Batch (None, 28, 28, 128)       512       
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 24, 24, 256)       819456    
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 12, 12, 256)       0         
+_________________________________________________________________
+batch_normalization_3 (Batch (None, 12, 12, 256)       1024      
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 8, 8, 64)          409664    
+_________________________________________________________________
+max_pooling2d_4 (MaxPooling2 (None, 4, 4, 64)          0         
+_________________________________________________________________
+batch_normalization_4 (Batch (None, 4, 4, 64)          256       
+_________________________________________________________________
+dropout (Dropout)            (None, 4, 4, 64)          0         
+_________________________________________________________________
+flatten (Flatten)            (None, 1024)              0         
+_________________________________________________________________
+dense (Dense)                (None, 256)               262400    
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 256)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 2)                 514       
+=================================================================
+Total params: 1,750,722
+Trainable params: 1,749,634
+Non-trainable params: 1,088
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IMAGE_DIRECTORY</span> <span class="o">=</span> <span class="s1">&#39;./data/training_set&#39;</span> 
+<span class="n">training_data</span><span class="o">=</span><span class="n">load_data</span><span class="p">(</span><span class="n">IMAGE_DIRECTORY</span><span class="p">)</span>
+<span class="n">training_images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">training_data</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">IMAGE_SIZE</span><span class="p">,</span> <span class="n">IMAGE_SIZE</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">training_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">training_data</span><span class="p">])</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;creating model&#39;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;training model&#39;</span><span class="p">)</span>
+<span class="n">train_history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training_images</span><span class="p">,</span> <span class="n">training_labels</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;model3.h5&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading images...
+Loading cats
+Loading notcats
+creating model
+training model
+Epoch 1/10
+8/8 [==============================] - 120s 15s/step - loss: 0.9532 - accuracy: 0.5700
+Epoch 2/10
+8/8 [==============================] - 120s 15s/step - loss: 0.7836 - accuracy: 0.6650
+Epoch 3/10
+8/8 [==============================] - 120s 15s/step - loss: 0.6751 - accuracy: 0.7050
+Epoch 4/10
+8/8 [==============================] - 120s 15s/step - loss: 0.4751 - accuracy: 0.7975
+Epoch 5/10
+8/8 [==============================] - 120s 15s/step - loss: 0.3631 - accuracy: 0.8625
+Epoch 6/10
+8/8 [==============================] - 123s 15s/step - loss: 0.3599 - accuracy: 0.8700
+Epoch 7/10
+8/8 [==============================] - 120s 15s/step - loss: 0.2442 - accuracy: 0.8900
+Epoch 8/10
+8/8 [==============================] - 120s 15s/step - loss: 0.2434 - accuracy: 0.8875
+Epoch 9/10
+8/8 [==============================] - 120s 15s/step - loss: 0.1376 - accuracy: 0.9525
+Epoch 10/10
+8/8 [==============================] - 125s 16s/step - loss: 0.1312 - accuracy: 0.9550
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 模型載入</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loading model...&#39;</span><span class="p">)</span>
+<span class="n">model1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;model3.h5&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading model...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IMAGE_DIRECTORY</span> <span class="o">=</span> <span class="s1">&#39;./data/test_set&#39;</span>
+<span class="n">testing_data</span><span class="o">=</span><span class="n">load_data</span><span class="p">(</span><span class="n">IMAGE_DIRECTORY</span><span class="p">)</span>
+<span class="n">testing_images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">testing_data</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">IMAGE_SIZE</span><span class="p">,</span> <span class="n">IMAGE_SIZE</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">testing_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">testing_data</span><span class="p">])</span>
+<span class="n">test_history</span> <span class="o">=</span> <span class="n">model1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training_images</span><span class="p">,</span> <span class="n">training_labels</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading images...
+Loading cats
+Loading notcats
+Epoch 1/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0931 - accuracy: 0.9650
+Epoch 2/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0573 - accuracy: 0.9800
+Epoch 3/10
+8/8 [==============================] - 121s 15s/step - loss: 0.0428 - accuracy: 0.9875
+Epoch 4/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0326 - accuracy: 0.9925
+Epoch 5/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0294 - accuracy: 0.9950
+Epoch 6/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0279 - accuracy: 0.9900
+Epoch 7/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0327 - accuracy: 0.9925
+Epoch 8/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0200 - accuracy: 1.0000
+Epoch 9/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0130 - accuracy: 1.0000
+Epoch 10/10
+8/8 [==============================] - 120s 15s/step - loss: 0.0088 - accuracy: 0.9975
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/20200929CAT_OR_NOT_7_0.png" src="_images/20200929CAT_OR_NOT_7_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/20200929CAT_OR_NOT_8_0.png" src="_images/20200929CAT_OR_NOT_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 顯示訓練成果(分數)</span>
+<span class="n">loss</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">model1</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">testing_images</span><span class="p">,</span> <span class="n">testing_labels</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;accuracy: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">acc</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13/13 [==============================] - 36s 3s/step - loss: 1.6827 - accuracy: 0.5775
+accuracy: 57.749998569488525
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#繪製模型</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">to_file</span><span class="o">=</span><span class="s1">&#39;model2.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/20200929CAT_OR_NOT_10_0.png" src="_images/20200929CAT_OR_NOT_10_0.png" />
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="20200929MNIST_Fashion.html" title="previous page">使用Keres MNIST Fashion辨識穿著</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By HUA<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>

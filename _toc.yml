@@ -5,3 +5,5 @@
     - file: notebooks
 - file: 20200901_房價回歸預測
 - file: 20200922_假設檢定
+- file: 20200929MNIST_Fashion
+- file: 20200929CAT_OR_NOT

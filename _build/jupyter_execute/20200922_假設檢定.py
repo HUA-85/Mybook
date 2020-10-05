@@ -10,35 +10,35 @@
 import pandas as pd
 
 
-# In[26]:
+# In[2]:
 
 
 df = pd.read_csv('./president_heights.csv')
 df.head(10)
 
 
-# In[41]:
+# In[3]:
 
 
 df2 = df.tail(10)
 df2
 
 
-# In[47]:
+# In[4]:
 
 
 df1 = df.head(len(df) - 10)
 df1
 
 
-# In[7]:
+# In[5]:
 
 
 #two sample , 單尾 假設檢定
 #虛無假設 H0 : U1 <=U2  H1 : U1 > U2
 
 
-# In[55]:
+# In[6]:
 
 
 import numpy as np
@@ -69,7 +69,7 @@ plt.axvline(pop.mean() + t*pop.std(), color='magenta', linestyle='dashed', linew
 plt.show()
 
 
-# In[61]:
+# In[7]:
 
 
 #檢定

@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用Keres MNIST Fashion辨識穿著 &#8212; 我的機器學習歷程</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Cat or Not" href="20200929CAT_OR_NOT.html" />
+    <link rel="prev" title="假設檢定" href="20200922_%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/ML_process.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">我的機器學習歷程</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome to your Jupyter Book
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="content.html">
+   Content in Jupyter Book
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20200901_%E6%88%BF%E5%83%B9%E5%9B%9E%E6%AD%B8%E9%A0%90%E6%B8%AC.html">
+   機器學習工作流程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20200922_%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A.html">
+   假設檢定
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   使用Keres MNIST Fashion辨識穿著
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20200929CAT_OR_NOT.html">
+   Cat or Not
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/20200929MNIST_Fashion.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/20200929MNIST_Fashion.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/20200929MNIST_Fashion.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="keres-mnist-fashion">
+<h1>使用Keres MNIST Fashion辨識穿著<a class="headerlink" href="#keres-mnist-fashion" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">keras.utils</span> <span class="kn">import</span> <span class="n">np_utils</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="nn">c:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\pywrap_tensorflow.py</span> in <span class="ni">swig_import_helper</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>         <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">18</span>             <span class="n">fp</span><span class="p">,</span> <span class="n">pathname</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="s1">&#39;_pywrap_tensorflow&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)])</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python36-32\lib\imp.py</span> in <span class="ni">find_module</span><span class="nt">(name, path)</span>
+<span class="g g-Whitespace">    </span><span class="mi">296</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">297</span>         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERR_MSG</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">298</span> 
+
+<span class="ne">ImportError</span>: No module named &#39;_pywrap_tensorflow&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">65</span>     <span class="c1"># use `dlopen()` for dynamic loading.</span>
+<span class="ne">---&gt; </span><span class="mi">66</span>     <span class="kn">from</span> <span class="nn">tensorflow.python</span> <span class="kn">import</span> <span class="n">pywrap_tensorflow</span>
+<span class="g g-Whitespace">     </span><span class="mi">67</span> <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\pywrap_tensorflow.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">27</span>             <span class="k">return</span> <span class="n">_mod</span>
+<span class="ne">---&gt; </span><span class="mi">28</span>     <span class="n">_pywrap_tensorflow</span> <span class="o">=</span> <span class="n">swig_import_helper</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="k">del</span> <span class="n">swig_import_helper</span>
+
+<span class="nn">c:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\pywrap_tensorflow.py</span> in <span class="ni">swig_import_helper</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">20</span>             <span class="kn">import</span> <span class="nn">_pywrap_tensorflow</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>             <span class="k">return</span> <span class="n">_pywrap_tensorflow</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;_pywrap_tensorflow&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">392282</span><span class="n">ad3d40</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">keras.utils</span> <span class="kn">import</span> <span class="n">np_utils</span>
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\tensorflow\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">22</span> 
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="c1"># pylint: disable=wildcard-import</span>
+<span class="ne">---&gt; </span><span class="mi">24</span> <span class="kn">from</span> <span class="nn">tensorflow.python</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="c1"># pylint: enable=wildcard-import</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> 
+
+<span class="ne">c</span>:\users\怡樺\hellodjango\lib\site-packages\tensorflow\python\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">70</span> <span class="k">for</span> <span class="n">some</span> <span class="n">common</span> <span class="n">reasons</span> <span class="ow">and</span> <span class="n">solutions</span><span class="o">.</span>  <span class="n">Include</span> <span class="n">the</span> <span class="n">entire</span> <span class="n">stack</span> <span class="n">trace</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span> <span class="n">above</span> <span class="n">this</span> <span class="n">error</span> <span class="n">message</span> <span class="n">when</span> <span class="n">asking</span> <span class="k">for</span> <span class="n">help</span><span class="o">.</span><span class="s2">&quot;&quot;&quot; % traceback.format_exc()</span>
+<span class="ne">---&gt; </span><span class="mi">72</span><span class="s2">   raise ImportError(msg)</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span><span class="s2"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span><span class="s2"> # Protocol buffers</span>
+
+<span class="ne">ImportError</span>: Traceback (most recent call last):
+<span class="s2">  File &quot;c:\users\怡樺\hellodjango\lib\site-packages</span><span class="se">\t</span><span class="s2">ensorflow\python\pywrap_tensorflow.py&quot;, line 18, in swig_import_helper</span>
+<span class="s2">    fp, pathname, description = imp.find_module(&#39;_pywrap_tensorflow&#39;, [dirname(__file__)])</span>
+<span class="s2">  File &quot;C:\Users\怡樺\AppData\Local\Programs\Python\Python36-32\lib\imp.py&quot;, line 297, in find_module</span>
+<span class="s2">    raise ImportError(_ERR_MSG.format(name), name=name)</span>
+<span class="ne">ImportError</span>: No module named &#39;_pywrap_tensorflow&#39;
+
+<span class="s2">During handling of the above exception, another exception occurred:</span>
+
+<span class="s2">Traceback (most recent call last):</span>
+<span class="s2">  File &quot;c:\users\怡樺\hellodjango\lib\site-packages</span><span class="se">\t</span><span class="s2">ensorflow\python\__init__.py&quot;, line 66, in &lt;module&gt;</span>
+<span class="s2">    from tensorflow.python import pywrap_tensorflow</span>
+<span class="s2">  File &quot;c:\users\怡樺\hellodjango\lib\site-packages</span><span class="se">\t</span><span class="s2">ensorflow\python\pywrap_tensorflow.py&quot;, line 28, in &lt;module&gt;</span>
+<span class="s2">    _pywrap_tensorflow = swig_import_helper()</span>
+<span class="s2">  File &quot;c:\users\怡樺\hellodjango\lib\site-packages</span><span class="se">\t</span><span class="s2">ensorflow\python\pywrap_tensorflow.py&quot;, line 20, in swig_import_helper</span>
+<span class="s2">    import _pywrap_tensorflow</span>
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;_pywrap_tensorflow&#39;
+
+
+<span class="s2">Failed to load the native TensorFlow runtime.</span>
+
+<span class="s2">See https://github.com/tensorflow/tensorflow/blob/master/tensorflow/g3doc/get_started/os_setup.md#import_error</span>
+
+<span class="s2">for some common reasons and solutions.  Include the entire stack trace</span>
+<span class="s2">above this error message when asking for help.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">),(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fashion_mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((60000, 28, 28), (10000,), (10000, 28, 28), (10000,))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,
+          0,   0,  13,  73,   0,   0,   1,   4,   0,   0,   0,   0,   1,
+          1,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   3,
+          0,  36, 136, 127,  62,  54,   0,   0,   0,   1,   3,   4,   0,
+          0,   3],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   6,
+          0, 102, 204, 176, 134, 144, 123,  23,   0,   0,   0,   0,  12,
+         10,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0, 155, 236, 207, 178, 107, 156, 161, 109,  64,  23,  77, 130,
+         72,  15],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   0,
+         69, 207, 223, 218, 216, 216, 163, 127, 121, 122, 146, 141,  88,
+        172,  66],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,
+        200, 232, 232, 233, 229, 223, 223, 215, 213, 164, 127, 123, 196,
+        229,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+        183, 225, 216, 223, 228, 235, 227, 224, 222, 224, 221, 223, 245,
+        173,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+        193, 228, 218, 213, 198, 180, 212, 210, 211, 213, 223, 220, 243,
+        202,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   3,   0,  12,
+        219, 220, 212, 218, 192, 169, 227, 208, 218, 224, 212, 226, 197,
+        209,  52],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   6,   0,  99,
+        244, 222, 220, 218, 203, 198, 221, 215, 213, 222, 220, 245, 119,
+        167,  56],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   4,   0,   0,  55,
+        236, 228, 230, 228, 240, 232, 213, 218, 223, 234, 217, 217, 209,
+         92,   0],
+       [  0,   0,   1,   4,   6,   7,   2,   0,   0,   0,   0,   0, 237,
+        226, 217, 223, 222, 219, 222, 221, 216, 223, 229, 215, 218, 255,
+         77,   0],
+       [  0,   3,   0,   0,   0,   0,   0,   0,   0,  62, 145, 204, 228,
+        207, 213, 221, 218, 208, 211, 218, 224, 223, 219, 215, 224, 244,
+        159,   0],
+       [  0,   0,   0,   0,  18,  44,  82, 107, 189, 228, 220, 222, 217,
+        226, 200, 205, 211, 230, 224, 234, 176, 188, 250, 248, 233, 238,
+        215,   0],
+       [  0,  57, 187, 208, 224, 221, 224, 208, 204, 214, 208, 209, 200,
+        159, 245, 193, 206, 223, 255, 255, 221, 234, 221, 211, 220, 232,
+        246,   0],
+       [  3, 202, 228, 224, 221, 211, 211, 214, 205, 205, 205, 220, 240,
+         80, 150, 255, 229, 221, 188, 154, 191, 210, 204, 209, 222, 228,
+        225,   0],
+       [ 98, 233, 198, 210, 222, 229, 229, 234, 249, 220, 194, 215, 217,
+        241,  65,  73, 106, 117, 168, 219, 221, 215, 217, 223, 223, 224,
+        229,  29],
+       [ 75, 204, 212, 204, 193, 205, 211, 225, 216, 185, 197, 206, 198,
+        213, 240, 195, 227, 245, 239, 223, 218, 212, 209, 222, 220, 221,
+        230,  67],
+       [ 48, 203, 183, 194, 213, 197, 185, 190, 194, 192, 202, 214, 219,
+        221, 220, 236, 225, 216, 199, 206, 186, 181, 177, 172, 181, 205,
+        206, 115],
+       [  0, 122, 219, 193, 179, 171, 183, 196, 204, 210, 213, 207, 211,
+        210, 200, 196, 194, 191, 195, 191, 198, 192, 176, 156, 167, 177,
+        210,  92],
+       [  0,   0,  74, 189, 212, 191, 175, 172, 175, 181, 185, 188, 189,
+        188, 193, 198, 204, 209, 210, 210, 211, 188, 188, 194, 192, 216,
+        170,   0],
+       [  2,   0,   0,   0,  66, 200, 222, 237, 239, 242, 246, 243, 244,
+        221, 220, 193, 191, 179, 182, 182, 181, 176, 166, 168,  99,  58,
+          0,   0],
+       [  0,   0,   0,   0,   0,   0,   0,  40,  61,  44,  72,  41,  35,
+          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0]], dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_train</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
+<span class="c1"># 0 T-shirt/top</span>
+<span class="c1"># 1 Trouser</span>
+<span class="c1"># 2 Pullover</span>
+<span class="c1"># 3 Dress</span>
+<span class="c1"># 4 Coat</span>
+<span class="c1"># 5 Sandal</span>
+<span class="c1"># 6 Shirt</span>
+<span class="c1"># 7 Sneaker</span>
+<span class="c1"># 8 Bag</span>
+<span class="c1"># 9 Ankle boot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([9, 0, 0, 3, 0, 2, 7, 2, 5, 5, 0, 9, 5, 5, 7, 9, 1, 0, 6, 4],
+      dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1bf3d18f3c8&gt;
+</pre></div>
+</div>
+<img alt="_images/20200929MNIST_Fashion_5_1.png" src="_images/20200929MNIST_Fashion_5_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 將非0的數字轉為1，顯示第1張圖片</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="c1"># 將轉換後二維內容顯示出來，隱約可以看出數字為 5</span>
+<span class="n">text_image</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">text_image</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
+<span class="n">text_image</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 1 0 0 1 1 0 0 0 0 1 1 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 1 1 1 1 0 0 0 1 1 1 0 0 1]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 1 1 1 1 1 1 0 0 0 0 1 1 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[0 0 1 1 1 1 1 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[0 1 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]&#39;,
+ &#39;[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]&#39;,
+ &#39;[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]&#39;,
+ &#39;[0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]&#39;,
+ &#39;[0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0]&#39;,
+ &#39;[1 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]&#39;,
+ &#39;[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>28
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 將 training 的 label 進行 one-hot encoding，例如數字 7 經過 One-hot encoding 轉換後是 0000000100，即第8個值為 1</span>
+<span class="n">y_TrainOneHot</span> <span class="o">=</span> <span class="n">np_utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span> 
+<span class="n">y_TestOneHot</span> <span class="o">=</span> <span class="n">np_utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 將 training 的 input 資料轉為2維</span>
+<span class="n">x_train_2D</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_train</span><span class="p">),</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>  
+<span class="n">x_test_2D</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_test</span><span class="p">),</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_Train_norm</span> <span class="o">=</span> <span class="n">x_train_2D</span><span class="o">/</span><span class="mi">255</span>
+<span class="n">x_Test_norm</span> <span class="o">=</span> <span class="n">x_test_2D</span><span class="o">/</span><span class="mi">255</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 建立簡單的線性執行的模型</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="c1"># Add Input layer, 隱藏層(hidden layer) 有 320個輸出變數</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">320</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span> 
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span> 
+<span class="c1"># Add output layer</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+<span class="c1"># 編譯: 選擇損失函數、優化方法及成效衡量方式</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_6&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_13 (Dense)             (None, 320)               251200    
+_________________________________________________________________
+dense_14 (Dense)             (None, 64)                20544     
+_________________________________________________________________
+dense_15 (Dense)             (None, 10)                650       
+=================================================================
+Total params: 272,394
+Trainable params: 272,394
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 進行訓練, 訓練過程會存在 train_history 變數中</span>
+<span class="n">train_history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_Train_norm</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_TrainOneHot</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10
+48/48 - 3s - loss: 1.0287 - accuracy: 0.6640 - val_loss: 0.5853 - val_accuracy: 0.7947
+Epoch 2/10
+48/48 - 3s - loss: 0.5292 - accuracy: 0.8135 - val_loss: 0.4947 - val_accuracy: 0.8263
+Epoch 3/10
+48/48 - 3s - loss: 0.4575 - accuracy: 0.8408 - val_loss: 0.4497 - val_accuracy: 0.8454
+Epoch 4/10
+48/48 - 2s - loss: 0.4160 - accuracy: 0.8546 - val_loss: 0.4161 - val_accuracy: 0.8522
+Epoch 5/10
+48/48 - 3s - loss: 0.3922 - accuracy: 0.8628 - val_loss: 0.4109 - val_accuracy: 0.8542
+Epoch 6/10
+48/48 - 2s - loss: 0.3721 - accuracy: 0.8698 - val_loss: 0.3790 - val_accuracy: 0.8687
+Epoch 7/10
+48/48 - 3s - loss: 0.3550 - accuracy: 0.8740 - val_loss: 0.3683 - val_accuracy: 0.8691
+Epoch 8/10
+48/48 - 3s - loss: 0.3388 - accuracy: 0.8800 - val_loss: 0.3606 - val_accuracy: 0.8731
+Epoch 9/10
+48/48 - 2s - loss: 0.3273 - accuracy: 0.8837 - val_loss: 0.3694 - val_accuracy: 0.8674
+Epoch 10/10
+48/48 - 2s - loss: 0.3162 - accuracy: 0.8874 - val_loss: 0.3397 - val_accuracy: 0.8777
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 顯示訓練成果(分數)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_Test_norm</span><span class="p">,</span> <span class="n">y_TestOneHot</span><span class="p">)</span>  
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;準確度 = </span><span class="si">{</span><span class="n">scores</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">100.0</span><span class="si">:</span><span class="s2">2.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>313/313 [==============================] - 1s 3ms/step - loss: 0.3695 - accuracy: 0.8689
+準確度 = 86.9
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#存模型</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;20200929fashion_mnist_keras.h5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#繪製模型</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">to_file</span><span class="o">=</span><span class="s1">&#39;model.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/20200929MNIST_Fashion_16_0.png" src="_images/20200929MNIST_Fashion_16_0.png" />
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="20200922_%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A.html" title="previous page">假設檢定</a>
+    <a class='right-next' id="next-link" href="20200929CAT_OR_NOT.html" title="next page">Cat or Not</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By HUA<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>
